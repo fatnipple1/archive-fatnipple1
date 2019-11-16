@@ -3,41 +3,35 @@
 
 <style>
 	#title {
-		width: 100%;
+		width: 50%;
 	}
 
-	#entry {
-		width: 50%;
+	#home {
+		image-orientation: from-image;
+		max-height: 500px;
+		width: auto;
 	}
 
 	.middle {
 		position: absolute;
-		margin: auto;
 		text-align: center;
-		top: 10%;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		width: 600px;
-	}
-
-	/* Mobile Styles */
-	@media only screen and (max-width: 650px) {
-		.middle {
-			width: 90%;
-		}
+		margin: auto;
 	}
 </style>
 
 <div class="middle">
-	<img id="title">
-	<img id="entry" src="static/img/home/home1.jpg">
+	<img id="title"><br/>
+	<img id="home">
 </div>
 
 <script>
+	var N_titles = 4
+	var N_homes = 15
+
 	function randInt(min, max) {
 		return min + Math.floor(Math.random() * (max - min))
 	}
 
-	$('#title').attr('src', `static/img/titles/title${randInt(1, 5)}.png`)
+	$('#title').attr('src', `static/img/title/title (${randInt(0, N_titles)+1}).png`)
+	$('#home').attr('src', `static/img/home/home (${randInt(0, N_homes)+1}).png`)
 </script>
