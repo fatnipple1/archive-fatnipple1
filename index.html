@@ -1,7 +1,12 @@
+
 <title>fatnipple1.html</title>
 <script src="static/js/jquery-3.4.1.min.js"></script>
 
 <style>
+	body {
+		margin-top: 1%;
+	}
+
 	#title {
 		width: 40%;
 	}
@@ -9,6 +14,7 @@
 	#home {
 		image-orientation: from-image;
 		max-height: 500px;
+		max-width: 50%;
 		width: auto;
 	}
 
@@ -16,6 +22,16 @@
 		position: absolute;
 		text-align: center;
 		margin: auto;
+	}
+
+	@media (max-width: 800px) {
+		#title {
+			width: 70%;
+		}
+
+		body {
+			margin-top: 10%;
+		}
 	}
 </style>
 
@@ -26,7 +42,7 @@
 
 <script>
 	var N_titles = 4
-	var N_homes = 15
+	var N_homes = 29
 
 	function randInt(min, max) {
 		return min + Math.floor(Math.random() * (max - min))
