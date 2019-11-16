@@ -1,0 +1,19 @@
+<title>fatnipple1.html</title>
+<script src="static/js/jquery-3.4.1.min.js"></script>
+
+<style>
+	#title {
+		text-align: center;
+		width: 50%;
+	}
+</style>
+
+<img id="title">
+
+<script>
+	function randInt(min, max) {
+		return min + Math.floor(Math.random() * (max - min))
+	}
+
+	$('#title').attr('src', `static/img/titles/title${randInt(1, 5)}.png`)
+</script>
