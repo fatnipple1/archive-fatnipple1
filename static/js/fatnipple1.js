@@ -20,4 +20,4 @@ if (GET.has('h')) home = GET.get('h')
 
 if (ref[home]) $('#entry').attr('href', ref[home])
 $('#home').attr('src', `static/img/home/home (${home}).jpg`)
-$('#title').attr('src', `static/img/title/title (${title}).png`)
+$('#title').attr('src', `static/img/title/title (${title}).jpg`)
