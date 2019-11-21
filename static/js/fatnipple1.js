@@ -1,5 +1,5 @@
 var N_titles = 4
-var N_homes = 29
+var N_homes = 30
 
 var ref = {
     15: 'waterfountain.html',
