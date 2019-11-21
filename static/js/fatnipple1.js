@@ -1,3 +1,5 @@
+var GET = new URLSearchParams(window.location.search)
+
 var N_titles = 4
 var N_homes = 30
 
@@ -10,8 +12,12 @@ function randInt(min, max) {
     return min + Math.floor(Math.random() * (max - min))
 }
 
-$('#title').attr('src', `static/img/title/title (${randInt(0, N_titles)+1}).png`)
+var title = randInt(0, N_titles) + 1
+var home = randInt(0, N_homes) + 1
 
-var home_num = randInt(0, N_homes) + 1
-if (ref[home_num]) $('#entry').attr('href', ref[home_num])
-$('#home').attr('src', `static/img/home/home (${home_num}).jpg`)
+if (GET.has('t')) title = GET.get('t')
+if (GET.has('h')) home = GET.get('h')
+
+if (ref[home]) $('#entry').attr('href', ref[home])
+$('#home').attr('src', `static/img/home/home (${home}).jpg`)
+$('#title').attr('src', `static/img/title/title (${title}).png`)
