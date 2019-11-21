@@ -1,68 +1,13 @@
-<title>fatnipple1.html</title>
-<script src="static/js/jquery-3.4.1.min.js"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<style>
-	body {
-		margin-top: 1%;
-	}
+<title>fatnipple1.html</title>
 
-	#title {
-		width: 40%;
-	}
-
-	#home {
-		padding-top: 10px;
-		image-orientation: from-image;
-		max-height: 500px;
-		max-width: 50%;
-		width: auto;
-	}
-
-	.middle {
-		position: absolute;
-		text-align: center;
-		margin: auto;
-	}
-
-	@media screen and (max-width: 1050px) {
-		#title {
-			width: 80%;
-		}
-
-		#home {
-			max-width: 60%;
-		}
-
-		body {
-			margin-top: 10%;
-		}
-	}
-</style>
+<link rel="stylesheet" href="static/css/fatnipple1.css">
 
 <div class="middle">
 	<img id="title"><br/>
-	<img id="home">
+	<a id="entry" href=""><img id="home"></a>
 </div>
 
-<script>
-	var N_titles = 4
-	var N_homes = 30
-
-	function randInt(min, max) {
-		return min + Math.floor(Math.random() * (max - min))
-	}
-
-	$('#title').attr('src', `static/img/title/title (${randInt(0, N_titles)+1}).png`)
-	$('#home').attr('src', `static/img/home/home (${randInt(0, N_homes)+1}).png`)
-</script>
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-152695219-1"></script>
-<script>
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-
-	gtag('config', 'UA-152695219-1');
-</script>
+<script src="static/js/jquery-3.4.1.min.js"></script>
+<script src="static/js/fatnipple1.js"></script>
