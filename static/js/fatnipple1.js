@@ -4,8 +4,9 @@ var N_titles = 4
 var N_homes = 30
 
 var ref = {
-    15: 'waterfountain.html',
-    13: 'romil.html'
+    15: 'fountain.html',
+    13: 'romil.html',
+    20: 'chavs.html'
 }
 
 function randInt(min, max) {
