@@ -34,7 +34,8 @@ var ref = {
     13: 'romil.html',
     15: 'fountain.html',
     18: 'letmego.html',
-    20: 'chavs.html'
+    20: 'chavs.html',
+    30: 'rage.html'
 }
 
 function randInt(min, max) {
