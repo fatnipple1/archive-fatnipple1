@@ -27,7 +27,7 @@ function getCookie(cname) {
 }
 
 var N_titles = 4
-var N_homes = 30
+var N_homes = 31
 
 var ref = {
     4: 'space.html',
@@ -35,7 +35,8 @@ var ref = {
     15: 'fountain.html',
     18: 'letmego.html',
     20: 'chavs.html',
-    30: 'rage.html'
+    30: 'rage.html',
+    31: 'tyla.html'
 }
 
 function randInt(min, max) {
