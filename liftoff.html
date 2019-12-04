@@ -1,0 +1,39 @@
+<style>
+    body {
+        margin: 0px;
+    }
+</style>
+
+<div id="wrap" style="position: fixed; height: 100%">
+    <div id="sky" style="position: fixed; top: 0px;"></div>
+    <img id="chung-away" style="position: fixed; bottom: 0px"src="static/img/flight/chung (1).png">
+    <!-- <canvas id="chung-away"></canvas> -->
+</div>
+
+<script>
+
+    var canvas = document.getElementById('chung-away')
+    var sky = document.getElementById('sky')
+    var wrap = document.getElementById('wrap')
+    var translation = 0
+
+    setInterval(() => {
+
+        canvas.height = window.innerHeight
+        canvas.width = canvas.height * (1088 / 1440)
+
+        if (window.innerWidth < canvas.width) {
+            canvas.width = window.innerWidth
+            canvas.height = canvas.width * (1440 / 1088)
+        }
+
+        wrap.style.left = (window.innerWidth - canvas.width) / 2
+        sky.style.height = window.innerHeight - canvas.height + 10 + translation
+        sky.style.width = canvas.width
+
+        // context.fillStyle = 'red'
+        // context.fillRect(0, 0, canvas.width, canvas.height)
+
+    }, 1000 / 60)
+
+</script>
