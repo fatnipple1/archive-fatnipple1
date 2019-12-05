@@ -2,38 +2,122 @@
     body {
         margin: 0px;
     }
+
+    .element {
+        position: fixed;
+    }
 </style>
 
-<div id="wrap" style="position: fixed; height: 100%">
-    <div id="sky" style="position: fixed; top: 0px;"></div>
-    <img id="chung-away" style="position: fixed; bottom: 0px"src="static/img/flight/chung (1).png">
-    <!-- <canvas id="chung-away"></canvas> -->
-</div>
+<title>liftoff.html</title>
+
+<h1 id="loader">Content loading... <span id="percent">0</span>%</h1>
+
+<div hidden id="sky" class="element" style="background: #547eb9; z-index: 0"></div>
+<img hidden id="chung" class="element" src="static/img/flight/just chung.png" style="z-index: 3">
+<div hidden id="animation" class="element" style="z-index: 2"></div>
+<img hidden id="background-sky" class="element" style="z-index: 1" src="static/img/flight/no chung sky.png">
 
 <script>
+    var loader = document.getElementById('loader')
+    var percent = document.getElementById('percent')
 
-    var canvas = document.getElementById('chung-away')
     var sky = document.getElementById('sky')
-    var wrap = document.getElementById('wrap')
-    var translation = 0
+    var background = document.getElementById('background-sky')
+    var animation = document.getElementById('animation')
+    var chung = document.getElementById('chung')
+    var loaded_count = 0
+    var n_frames = 47
+    var frames = []
 
-    setInterval(() => {
+    for (var i = 0; i < n_frames; i++) {
+        var frame = new Image()
+        frame.src = `static/img/flight/chung (${i+1}).png`
+        frame.style.width = '100%'
+        frame.style.height = '100%'
+        frame.hidden = true
+        frame.addEventListener('load', () => {
+            loaded_count++
+            var loaded = Math.round(loaded_count / n_frames * 100)
+            percent.innerText = loaded
+            if (loaded_count == n_frames) {
+                loader.hidden = true
+                sky.hidden = false
+                animation.hidden = false
+                console.log('All frames loaded')
+                setTimeout(doAnim, anim_speed)
+            }
+        })
 
-        canvas.height = window.innerHeight
-        canvas.width = canvas.height * (1088 / 1440)
+        animation.appendChild(frame)
+        frames.push(frame)
+    }
 
-        if (window.innerWidth < canvas.width) {
-            canvas.width = window.innerWidth
-            canvas.height = canvas.width * (1440 / 1088)
+    var anim_frame = 0
+    var anim_speed = 1000 / 30
+    var game_speed = 1000 / 60
+    var chung_scalar = 1
+    var sky_offset = 0
+    function doAnim() {
+        sizeElements()
+        frames[anim_frame ? anim_frame - 1 : 0].hidden = true
+        frames[anim_frame].hidden = false
+        anim_frame++
+
+        if (anim_frame < 47) {
+            setTimeout(doAnim, anim_speed)
+        } else {
+            background.hidden = false
+            animation.hidden = true
+            chung.hidden = false
+            setInterval(game, game_speed)
         }
+    }
 
-        wrap.style.left = (window.innerWidth - canvas.width) / 2
-        sky.style.height = window.innerHeight - canvas.height + 10 + translation
-        sky.style.width = canvas.width
+    function getWidth(element) { return parseInt(element.style.width, 10) }
+    function getHeight(element) { return parseInt(element.style.height, 10) }
 
-        // context.fillStyle = 'red'
-        // context.fillRect(0, 0, canvas.width, canvas.height)
+    function centerElem(element) {
+        element.style.left = (window.innerWidth - getWidth(element)) / 2
+    }
 
-    }, 1000 / 60)
+    function sizeElements() {
+        centerElem(sky)
+        centerElem(background)
+        centerElem(animation)
+        centerElem(chung)
+
+        if (height < window.innerHeight) sky.style.height = height
+        else sky.style.height = window.innerHeight
+
+        animation.style.height = window.innerHeight
+        animation.style.width = getHeight(animation) * (1088 / 1440)
+
+        chung.style.width = getWidth(animation) * chung_scalar
+        chung.style.height = getHeight(animation) * chung_scalar
+        
+        background.style.width = getWidth(animation)
+        background.style.height = getWidth(animation) * (1908 / 1088)
+
+        background.style.bottom = 0
+        chung.style.bottom = 0
+
+        sky.style.width = getWidth(animation) + sky_offset
+    }
+
+    var height = 0
+    var xposn = 0
+    function game() {
+        sizeElements()
+        height += 15
+
+        if (chung_scalar > 0.3) chung_scalar *= 0.99
+        if (getWidth(sky) < window.innerWidth) sky_offset += 5
+
+        background.style.bottom = -height
+        chung.style.left = ((window.innerWidth - chung.width) / 2) + xposn
+    }
+
+    (1088, 1908)
+    (1088, 1440)
 
 </script>
