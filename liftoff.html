@@ -202,6 +202,7 @@
 
         if ((height + vert_speed) % (100 * 5 * 60) <= vert_speed) {
             vert_speed += 3
+            chung_speed += 1
             sky.style.background = `hsl(215, 42%, ${53 - (vert_speed - vert_initial) / 3}%)`
         }
 
