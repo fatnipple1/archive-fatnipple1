@@ -13,7 +13,8 @@
 <h1 id="loader">Content loading... <span id="percent">0</span>%</h1>
 
 <div hidden id="sky" class="element" style="background: #547eb9; z-index: 0"></div>
-<img hidden id="chung" class="element" src="static/img/flight/just chung.png" style="z-index: 3">
+<img hidden id="cloud" class="element" src="static/img/flight/cloud.png" style="z-index: 10">
+<img hidden id="chung" class="element" src="static/img/flight/just chung.png" style="z-index: 10">
 <div hidden id="animation" class="element" style="z-index: 2"></div>
 <img hidden id="background-sky" class="element" style="z-index: 1" src="static/img/flight/no chung sky.png">
 
@@ -23,6 +24,7 @@
 
     var sky = document.getElementById('sky')
     var background = document.getElementById('background-sky')
+    var cloud = document.getElementById('cloud')
     var animation = document.getElementById('animation')
     var chung = document.getElementById('chung')
     var loaded_count = 0
@@ -43,8 +45,8 @@
                 loader.hidden = true
                 sky.hidden = false
                 animation.hidden = false
-                console.log('All frames loaded')
                 setTimeout(doAnim, anim_speed)
+                console.log('Animation initiated')
             }
         })
 
@@ -63,14 +65,9 @@
         frames[anim_frame].hidden = false
         anim_frame++
 
-        if (anim_frame < 47) {
+        if (anim_frame < 47)
             setTimeout(doAnim, anim_speed)
-        } else {
-            background.hidden = false
-            animation.hidden = true
-            chung.hidden = false
-            setInterval(game, game_speed)
-        }
+        else init()
     }
 
     function getWidth(element) { return parseInt(element.style.width, 10) }
@@ -98,26 +95,92 @@
         background.style.width = getWidth(animation)
         background.style.height = getWidth(animation) * (1908 / 1088)
 
+        cloud.style.width = window.innerWidth * 0.3
+        cloud.style.height = getWidth(cloud) * (1290 / 1988)
+
         background.style.bottom = 0
         chung.style.bottom = 0
 
         sky.style.width = getWidth(animation) + sky_offset
     }
 
-    var height = 0
-    var xposn = 0
-    function game() {
-        sizeElements()
-        height += 15
+    var keystate = {left: false, right: false, up: false, down: false}
+    function init() {    
+        background.hidden = false
+        animation.hidden = true
+        chung.hidden = false
+        cloud.hidden = false
 
-        if (chung_scalar > 0.3) chung_scalar *= 0.99
-        if (getWidth(sky) < window.innerWidth) sky_offset += 5
+        document.onkeydown = (e) => {
+            switch (e.keyCode) {
+            case 37:
+                keystate.left = true
+                break;
+            case 38:
+                keystate.up = true
+                break;
+            case 39:
+                keystate.right = true
+                break;
+            case 40:
+                keystate.left = true
+                break;
+            }
+        }
 
-        background.style.bottom = -height
-        chung.style.left = ((window.innerWidth - chung.width) / 2) + xposn
+        document.onkeyup = (e) => {
+            switch (e.keyCode) {
+            case 37:
+                keystate.left = false
+                break;
+            case 38:
+                keystate.up = false
+                break;
+            case 39:
+                keystate.right = false
+                break;
+            case 40:
+                keystate.left = false
+                break;
+            }
+        }
+        
+        setInterval(game, game_speed)
+
+        console.log('Game initiated')
     }
 
-    (1088, 1908)
-    (1088, 1440)
+    var height = 0
+    var vert_speed = 15
+    var xposn = 0
+    var chung_speed = 10
+    var cloud_y = 9999
+    var cloud_x = 0
+    function game() {
+        sizeElements()
+        height += vert_speed
+        cloud_y += vert_speed * 0.7
 
+        var xmin = -(window.innerWidth / 2)
+        var xmax = window.innerWidth / 2
+
+        if (getWidth(chung) / window.innerHeight > 0.2) chung_scalar *= 0.99
+        if (getWidth(sky) < window.innerWidth) sky_offset += 5
+
+        if (cloud_y > window.innerHeight) {
+            cloud.style.zIndex = Math.floor(Math.random() * 2) + 10
+            cloud_y = -getHeight(cloud)
+            cloud_x = Math.floor(Math.random() * window.innerWidth) - (getWidth(cloud) / 2)
+        }
+
+        background.style.bottom = -height
+
+        cloud.style.top = cloud_y
+        cloud.style.left = cloud_x
+
+        chung.style.left = ((window.innerWidth - chung.width) / 2) + xposn
+
+        if (keystate.left && xposn > xmin) xposn -= chung_speed
+        if (keystate.right && xposn < xmax) xposn += chung_speed
+    }
 </script>
