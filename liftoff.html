@@ -144,6 +144,17 @@
                 break;
             }
         }
+
+        window.addEventListener('touchstart', (e) => {
+            var middle = window.innerWidth / 2
+            if (e.changedTouches[0].pageX > middle) keystate.right = true
+            else keystate.left = true
+        })
+
+        window.addEventListener('touchend', (e) => {
+            keystate.left = false
+            keystate.right = false
+        })
         
         setInterval(game, game_speed)
 
