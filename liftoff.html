@@ -104,8 +104,8 @@
         background.style.width = getWidth(animation)
         background.style.height = getWidth(animation) * (1908 / 1088)
 
-        cloud.style.width = window.innerWidth * 0.3
-        cloud.style.height = getWidth(cloud) * (1290 / 1988)
+        cloud.style.height = window.innerHeight * 0.2
+        cloud.style.width = getHeight(cloud) * (1988 / 1290)
 
         background.style.bottom = 0
         chung.style.bottom = 0
@@ -186,12 +186,12 @@
         var speed_ms = vert_speed / 5
 
         hud_height.innerText = height_m
-        hud_speed.innerText = speed_ms
+        hud_speed.innerText = Math.floor(speed_ms)
 
         var xmin = -(window.innerWidth / 2)
         var xmax = window.innerWidth / 2
 
-        if (getWidth(chung) / window.innerHeight > 0.2) chung_scalar *= 0.99
+        if (getWidth(chung) / window.innerHeight > 0.23) chung_scalar *= 0.99
         if (getWidth(sky) < window.innerWidth) sky_offset += 5
 
         if (cloud_y > window.innerHeight) {
@@ -200,11 +200,9 @@
             cloud_x = Math.floor(Math.random() * window.innerWidth) - (getWidth(cloud) / 2)
         }
 
-        if ((height + vert_speed) % (100 * 5 * 60) <= vert_speed) {
-            vert_speed += 3
-            chung_speed += 1
-            sky.style.background = `hsl(215, 42%, ${53 - (vert_speed - vert_initial) / 3}%)`
-        }
+        vert_speed = vert_initial + 100 * (height_m / 1000)
+        chung_speed = 10 + 15 * (height_m / 1000)
+        sky.style.background = `hsl(215, 42%, ${53 * (1 - (height_m / 4000))}%)`
 
         background.style.bottom = -height
 
